@@ -34,6 +34,6 @@ setup(
     project_urls=conf.PACKAGE_URLS,
     url=conf.PACKAGE_URLS['Code'],
     scripts=conf.SCRIPTS,
-    entry_points=entry_points,
+    entry_points={'pyfileconf': ['datacode = pyfileconf_datacode.plugin']},
     **extra_kwargs
 )
