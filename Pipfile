@@ -21,6 +21,7 @@ pytest-cov = "*"
 mypy = "*"
 pypandoc = "*"
 cruft = "*"
+pyfileconf = "*"
 
 [requires]
 python_version = "3.7"
