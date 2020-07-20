@@ -22,6 +22,8 @@ mypy = "*"
 pypandoc = "*"
 cruft = "*"
 pyfileconf = "*"
+datacode = "*"
+pdbpp = "*"
 
 [requires]
 python_version = "3.7"
