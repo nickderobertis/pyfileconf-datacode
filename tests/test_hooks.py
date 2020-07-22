@@ -20,6 +20,7 @@ def increment_counter(source: dc.DataSource) -> dc.DataSource:
     COUNTER += 1
     return source
 
+
 class TestHooks(PFCDatacodeTest):
 
     def teardown_method(self, method):
@@ -40,4 +41,21 @@ class TestHooks(PFCDatacodeTest):
         s.dcpm.analysis.temp.thing()
         assert COUNTER == 1
         assert context.currently_running_section_path_str is None
+
+    def test_config_update_resets_dependent_pipeline(self):
+        pipeline_manager = self.create_pm()
+        pipeline_manager.load()
+        self.create_entries(pipeline_manager)
+        opts = dc.TransformOptions(increment_counter, transform_key='increment_count')
+        s = Selector()
+        self.create_transform(
+            pipeline_manager, 'transdata.temp.thing', opts=opts, data_source=s.dcpm.sources.some.three
+        )
+        Selector().dcpm.transdata.temp.thing()
+        assert COUNTER == 1
+        Selector().dcpm.transdata.temp.thing()
+        assert COUNTER == 1
+        pipeline_manager.update(section_path_str="confs2.ConfigExample", a=300000)
+        Selector().dcpm.transdata.temp.thing()
+        assert COUNTER == 2
 

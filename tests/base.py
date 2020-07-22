@@ -368,4 +368,4 @@ class PFCDatacodeTest(TestCase):
     def create_graph(self, pm: PipelineManager):
         collection = {attr: pm.get(attr) for attr in DATA_ATTRS}
         explorer = dc.DataExplorer.from_dict(collection)
-        explorer.graph(include_attrs=['difficulty']).render(GRAPH_PATH)
+        explorer.graph(include_attrs=['difficulty', '_section_path_str']).render(GRAPH_PATH)
