@@ -1,13 +1,15 @@
 import os
 from collections import defaultdict
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Union
 from unittest import TestCase
 
 import pandas as pd
 import datacode as dc
 from datacode import MergeOptions
+from datacode.models.pipeline.base import DataPipeline
 from pyfileconf import Selector
 from pyfileconf.main import create_project, PipelineManager
+from pyfileconf.selector.models.itemview import ItemView
 
 from tests.input_files.example_config import ConfigExample
 from tests.utils import delete_project
@@ -80,6 +82,8 @@ SPECIFIC_CLASS_CONFIG_DICTS = [
         'always_import_strs': ALWAYS_IMPORT_STRS
     },
 ]
+
+AnyDataSource = Union[dc.DataSource, DataPipeline, ItemView]
 
 
 def sum_all_numeric(source: dc.DataSource) -> int:
@@ -183,9 +187,9 @@ class PFCDatacodeTest(TestCase):
         self.create_sources(pm)
         self.create_merges(pm)
         self.create_generators(pm)
-        self.create_transformers(pm)
+        self.create_transform(pm)
         self.create_combiners(pm)
-        self.create_analysis(pm)
+        self.create_default_analyses(pm)
         self.create_graph(pm)
 
     def create_data(self):
@@ -280,15 +284,20 @@ class PFCDatacodeTest(TestCase):
             pipeline=s.dcpm.gendata.some.thing
         )
 
-    def create_transformers(self, pm: PipelineManager):
+    def create_transform(self, pm: PipelineManager, section_path_str: str = 'transdata.some.thing',
+                         opts: Optional[dc.TransformOptions] = None, data_source: Optional[AnyDataSource] = None,
+                         name: str = 'Transform'):
         s = Selector()
-        opts = dc.TransformOptions(source_transform_func, transform_key='add_one')
-        pm.create('transdata.some.thing')
+        if opts is None:
+            opts = dc.TransformOptions(source_transform_func, transform_key='add_one')
+        if data_source is None:
+            data_source = s.dcpm.merges.some.thing
+        pm.create(section_path_str)
         pm.update(
-            section_path_str='transdata.some.thing',
-            data_source=s.dcpm.merges.some.thing,
+            section_path_str=section_path_str,
+            data_source=data_source,
             options=opts,
-            name='Transform',
+            name=name,
         )
 
     def create_combiners(self, pm: PipelineManager):
@@ -319,22 +328,24 @@ class PFCDatacodeTest(TestCase):
             b=4000,
         )
 
-    def create_analysis(self, pm: PipelineManager):
+    def create_default_analyses(self, pm: PipelineManager):
         s = Selector()
-        opts = dc.AnalysisOptions(sum_all_numeric)
-        pm.create('analysis.some.one')
+        self.create_analysis(pm, 'analysis.some.one', name='Analysis One')
+        self.create_analysis(pm, 'analysis.some.two', data_source=s.dcpm.combinedata.some.thing, name='Analysis Two')
+
+    def create_analysis(self, pm: PipelineManager, section_path_str: str, opts: Optional[dc.AnalysisOptions] = None,
+                        data_source: Optional[AnyDataSource] = None, name: str = 'Analysis'):
+        s = Selector()
+        if opts is None:
+            opts = dc.AnalysisOptions(sum_all_numeric)
+        if data_source is None:
+            data_source = s.dcpm.transdata.some.thing
+        pm.create(section_path_str)
         pm.update(
-            section_path_str='analysis.some.one',
-            data_source=s.dcpm.transdata.some.thing,
+            section_path_str=section_path_str,
+            data_source=data_source,
             options=opts,
-            name='Analysis One'
-        )
-        pm.create('analysis.some.two')
-        pm.update(
-            section_path_str='analysis.some.two',
-            data_source=s.dcpm.combinedata.some.thing,
-            options=opts,
-            name='Analysis Two'
+            name=name
         )
 
     def create_csv(self, df: Optional[pd.DataFrame] = None, **to_csv_kwargs):
