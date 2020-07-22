@@ -7,7 +7,7 @@ import pandas as pd
 import datacode as dc
 from datacode import MergeOptions
 from datacode.models.pipeline.base import DataPipeline
-from pyfileconf import Selector
+from pyfileconf import Selector, context
 from pyfileconf.main import create_project, PipelineManager
 from pyfileconf.selector.models.itemview import ItemView
 
@@ -176,9 +176,7 @@ class PFCDatacodeTest(TestCase):
         return pipeline_manager
 
     def reset_pm_class(self):
-        PipelineManager.config_dependencies = defaultdict(lambda: set())
-        PipelineManager._config_attribute_dependencies = defaultdict(lambda: set())
-        PipelineManager._file_is_currently_being_loaded = False
+        context.reset()
 
     def create_entries(self, pm: PipelineManager):
         self.create_example_configs(pm)

@@ -11,10 +11,14 @@ COUNTER = 0
 
 def assert_context_is_updated(source: dc.DataSource) -> dc.DataSource:
     assert context.currently_running_section_path_str == EXPECT_OPERATION_CONTEXT_SECTION_PATH
+    increment_counter(source)
+    return source
+
+
+def increment_counter(source: dc.DataSource) -> dc.DataSource:
     global COUNTER
     COUNTER += 1
     return source
-
 
 class TestHooks(PFCDatacodeTest):
 
