@@ -13,9 +13,10 @@ class TestUpdatePlugin(PFCDatacodeTest):
         s = Selector()
         iv = s.dcpm.analysis.some.one
         iv2 = s.dcpm.analysis.some.two
+        unrelated_iv = s.dcpm.stuff.thing.a_function
 
         # Run each once so dynamic config dependencies are tracked
-        pipeline_manager.run([iv, iv2])
+        pipeline_manager.run([iv, iv2, unrelated_iv])
 
         config_updates = [
             dict(section_path_str="dcpm.confs.ConfigExample", a=10000),

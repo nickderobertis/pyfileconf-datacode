@@ -12,6 +12,7 @@ from pyfileconf.main import create_project, PipelineManager
 from pyfileconf.selector.models.itemview import ItemView
 
 from tests.input_files.example_config import ConfigExample
+from tests.input_files.example_func import a_function
 from tests.utils import delete_project
 
 BASE_GENERATED_DIR = os.path.join('tests', 'generated_files')
@@ -190,6 +191,7 @@ class PFCDatacodeTest(TestCase):
         self.create_transform(pm)
         self.create_combiners(pm)
         self.create_default_analyses(pm)
+        self.create_function(pm)
         self.create_graph(pm)
 
     def create_data(self):
@@ -346,6 +348,13 @@ class PFCDatacodeTest(TestCase):
             data_source=data_source,
             options=opts,
             name=name
+        )
+
+    def create_function(self, pm: PipelineManager, section_path_str = 'stuff.thing'):
+        pm.create(section_path_str, a_function)
+        pm.update(
+            section_path_str=section_path_str + '.a_function',
+            a='abc'
         )
 
     def create_csv(self, df: Optional[pd.DataFrame] = None, **to_csv_kwargs):
