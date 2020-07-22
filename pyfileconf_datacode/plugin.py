@@ -7,6 +7,7 @@ from typing import (
     Tuple,
     Set,
     TYPE_CHECKING,
+    Sequence,
 )
 
 if TYPE_CHECKING:
@@ -57,18 +58,23 @@ def pyfileconf_iter_modify_cases(
     ordered_sp_strs = list(section_path_strs)
     ordered_sp_strs.sort(key=lambda sp_str: -difficulties[sp_str])
 
-    get_sort_key = partial(_sort_key_for_case_tup, ordered_sp_strs)
+    get_sort_key = partial(
+        _sort_key_for_case_tup, ordered_sp_strs, runner.config_updates
+    )
     cases.sort(key=lambda case_tup: get_sort_key(case_tup))
 
 
 def _sort_key_for_case_tup(
-    ordered_sp_strs: List[str], case: Tuple[Dict[str, Any], ...]
+    ordered_sp_strs: List[str],
+    config_updates: Sequence[Dict[str, Any]],
+    case: Tuple[Dict[str, Any], ...],
 ) -> str:
     key_parts: List[str] = [""] * len(ordered_sp_strs)
     for conf in case:
-        conf_idx = ordered_sp_strs.index(conf["section_path_str"])
+        conf_type_idx = ordered_sp_strs.index(conf["section_path_str"])
+        conf_item_idx = list(config_updates).index(conf)
         key_parts[
-            conf_idx
-        ] = f"{id(conf):030}"  # pad with zeroes to ensure differing length doesn't change order
+            conf_type_idx
+        ] = f"{conf_item_idx:030}"  # pad with zeroes to ensure differing length doesn't change order
     key = "_".join(key_parts)
     return key
