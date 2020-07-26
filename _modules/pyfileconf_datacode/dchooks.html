@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconf_datacode.dchooks &mdash; pyfileconf-datacode 0.1.0 documentation</title>
+  <title>pyfileconf_datacode.dchooks &mdash; pyfileconf-datacode 0.1.1 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.1.1
               </div>
             
           
@@ -171,9 +171,7 @@
 
 <span class="kn">import</span> <span class="nn">datacode.hooks</span> <span class="k">as</span> <span class="nn">dc_hooks</span>
 <span class="kn">from</span> <span class="nn">datacode.models.pipeline.operations.operation</span> <span class="kn">import</span> <span class="n">DataOperation</span>
-<span class="kn">from</span> <span class="nn">pyfileconf.context</span> <span class="kn">import</span> <span class="n">context</span>
-
-<span class="n">ORIGINAL_SECTION_PATH</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="kn">from</span> <span class="nn">pyfileconf</span> <span class="kn">import</span> <span class="n">context</span>
 
 
 <div class="viewcode-block" id="update_pfc_context_to_pipeline_section_path"><a class="viewcode-back" href="../../api/pyfileconf_datacode.html#pyfileconf_datacode.dchooks.update_pfc_context_to_pipeline_section_path">[docs]</a><span class="k">def</span> <span class="nf">update_pfc_context_to_pipeline_section_path</span><span class="p">(</span><span class="n">operation</span><span class="p">:</span> <span class="n">DataOperation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -184,10 +182,7 @@
 <span class="sd">    :param operation: The operation which is about to be executed</span>
 <span class="sd">    :return: None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">ORIGINAL_SECTION_PATH</span>
-    <span class="n">ORIGINAL_SECTION_PATH</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">currently_running_section_path_str</span>
-    <span class="n">new_section_path_str</span> <span class="o">=</span> <span class="n">operation</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">_section_path_str</span>  <span class="c1"># type: ignore</span>
-    <span class="n">context</span><span class="o">.</span><span class="n">currently_running_section_path_str</span> <span class="o">=</span> <span class="n">new_section_path_str</span></div>
+    <span class="n">context</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">add_running_item</span><span class="p">(</span><span class="n">operation</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">_section_path_str</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
 
 
 <div class="viewcode-block" id="update_pfc_context_to_original"><a class="viewcode-back" href="../../api/pyfileconf_datacode.html#pyfileconf_datacode.dchooks.update_pfc_context_to_original">[docs]</a><span class="k">def</span> <span class="nf">update_pfc_context_to_original</span><span class="p">(</span><span class="n">operation</span><span class="p">:</span> <span class="n">DataOperation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -198,8 +193,7 @@
 <span class="sd">    :param operation: The operation which was just executed</span>
 <span class="sd">    :return: None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">ORIGINAL_SECTION_PATH</span>
-    <span class="n">context</span><span class="o">.</span><span class="n">currently_running_section_path_str</span> <span class="o">=</span> <span class="n">ORIGINAL_SECTION_PATH</span></div>
+    <span class="n">context</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop_frame</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="add_hooks"><a class="viewcode-back" href="../../api/pyfileconf_datacode.html#pyfileconf_datacode.dchooks.add_hooks">[docs]</a><span class="k">def</span> <span class="nf">add_hooks</span><span class="p">():</span>
