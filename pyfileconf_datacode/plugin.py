@@ -116,3 +116,4 @@ def pyfileconf_pre_update(
 ) -> Optional[Dict[str, Any]]:
     full_sp = SectionPath.join(pm.name, section_path_str)
     reset_roots([full_sp.path_str])
+    return None

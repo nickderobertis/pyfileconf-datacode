@@ -1,7 +1,11 @@
 from typing import Iterable, Dict, List
 
+from pyfileconf.selector.models.itemview import ItemView
 
-def config_dependencies_for_section_path_strs(section_path_strs: Iterable[str]) -> Dict[str, List['ItemView']]:
+
+def config_dependencies_for_section_path_strs(
+    section_path_strs: Iterable[str],
+) -> Dict[str, List["ItemView"]]:
     from pyfileconf import context
     from pyfileconf.selector.models.itemview import ItemView
 
