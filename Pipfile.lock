@@ -922,11 +922,11 @@
         },
         "pyfileconf": {
             "hashes": [
-                "sha256:b939f9a4d680d166e4c4cbe5f112cd6bc6402e0de64ca743fd91f2a957996fd3",
-                "sha256:fc54359435d4a7f3cec1929fea24075e81eb2e28dbc721b347d7cea03ae39279"
+                "sha256:0ffdc5d820d9142586c8a510213daab6a21a448ecd362260a41a03b21e368910",
+                "sha256:59a27905043e99e5d73c929da45082d81c5b96f5102a649f7bbeae267bf52cc6"
             ],
             "index": "pypi",
-            "version": "==0.13.3"
+            "version": "==0.13.4"
         },
         "pygments": {
             "hashes": [

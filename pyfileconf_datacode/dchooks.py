@@ -5,9 +5,7 @@ from typing import Optional
 
 import datacode.hooks as dc_hooks
 from datacode.models.pipeline.operations.operation import DataOperation
-from pyfileconf.context import context
-
-ORIGINAL_SECTION_PATH: Optional[str] = None
+from pyfileconf import context
 
 
 def update_pfc_context_to_pipeline_section_path(operation: DataOperation) -> None:
@@ -18,10 +16,7 @@ def update_pfc_context_to_pipeline_section_path(operation: DataOperation) -> Non
     :param operation: The operation which is about to be executed
     :return: None
     """
-    global ORIGINAL_SECTION_PATH
-    ORIGINAL_SECTION_PATH = context.currently_running_section_path_str
-    new_section_path_str = operation.pipeline._section_path_str  # type: ignore
-    context.currently_running_section_path_str = new_section_path_str
+    context.stack.add_running_item(operation.pipeline._section_path_str)  # type: ignore
 
 
 def update_pfc_context_to_original(operation: DataOperation) -> None:
@@ -32,8 +27,7 @@ def update_pfc_context_to_original(operation: DataOperation) -> None:
     :param operation: The operation which was just executed
     :return: None
     """
-    global ORIGINAL_SECTION_PATH
-    context.currently_running_section_path_str = ORIGINAL_SECTION_PATH
+    context.stack.pop_frame()
 
 
 def add_hooks():
