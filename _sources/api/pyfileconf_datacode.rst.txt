@@ -1,0 +1,59 @@
+pyfileconf\_datacode package
+============================
+
+.. automodule:: pyfileconf_datacode
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+pyfileconf\_datacode.config module
+----------------------------------
+
+.. automodule:: pyfileconf_datacode.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconf\_datacode.dchooks module
+-----------------------------------
+
+.. automodule:: pyfileconf_datacode.dchooks
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconf\_datacode.dcopts module
+----------------------------------
+
+.. automodule:: pyfileconf_datacode.dcopts
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconf\_datacode.model module
+---------------------------------
+
+.. automodule:: pyfileconf_datacode.model
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconf\_datacode.plugin module
+----------------------------------
+
+.. automodule:: pyfileconf_datacode.plugin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyfileconf\_datacode.reset module
+---------------------------------
+
+.. automodule:: pyfileconf_datacode.reset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

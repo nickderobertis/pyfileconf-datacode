@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyfileconf_datacode package &mdash; pyfileconf-datacode 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/gallery-dataframe.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="pyfileconf_datacode" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pyfileconf-datacode
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with pyfileconf-datacode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">This is my gallery</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyfileconf_datacode</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyfileconf_datacode package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyfileconf_datacode.config">pyfileconf_datacode.config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyfileconf_datacode.dchooks">pyfileconf_datacode.dchooks module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyfileconf_datacode.dcopts">pyfileconf_datacode.dcopts module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyfileconf_datacode.model">pyfileconf_datacode.model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyfileconf_datacode.plugin">pyfileconf_datacode.plugin module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyfileconf_datacode.reset">pyfileconf_datacode.reset module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyfileconf-datacode</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">pyfileconf_datacode</a> &raquo;</li>
+        
+      <li>pyfileconf_datacode package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/pyfileconf_datacode.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pyfileconf_datacode">
+<span id="pyfileconf-datacode-package"></span><h1>pyfileconf_datacode package<a class="headerlink" href="#module-pyfileconf_datacode" title="Permalink to this headline">¶</a></h1>
+<p>pyfileconf plugin to support datacode operations</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyfileconf_datacode.config">
+<span id="pyfileconf-datacode-config-module"></span><h2>pyfileconf_datacode.config module<a class="headerlink" href="#module-pyfileconf_datacode.config" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pyfileconf_datacode.config.config_dependencies_for_section_path_strs">
+<code class="sig-prename descclassname">pyfileconf_datacode.config.</code><code class="sig-name descname">config_dependencies_for_section_path_strs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">section_path_strs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/config.html#config_dependencies_for_section_path_strs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.config.config_dependencies_for_section_path_strs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ItemView</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyfileconf_datacode.dchooks">
+<span id="pyfileconf-datacode-dchooks-module"></span><h2>pyfileconf_datacode.dchooks module<a class="headerlink" href="#module-pyfileconf_datacode.dchooks" title="Permalink to this headline">¶</a></h2>
+<p>Hooks into datacode to update pyfileconf context with datacode operations</p>
+<dl class="py function">
+<dt id="pyfileconf_datacode.dchooks.add_hooks">
+<code class="sig-prename descclassname">pyfileconf_datacode.dchooks.</code><code class="sig-name descname">add_hooks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/dchooks.html#add_hooks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.dchooks.add_hooks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pyfileconf_datacode.dchooks.update_pfc_context_to_original">
+<code class="sig-prename descclassname">pyfileconf_datacode.dchooks.</code><code class="sig-name descname">update_pfc_context_to_original</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">operation</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/dchooks.html#update_pfc_context_to_original"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.dchooks.update_pfc_context_to_original" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revert the change to pyfileconf currently running context
+made by <a class="reference internal" href="#pyfileconf_datacode.dchooks.update_pfc_context_to_pipeline_section_path" title="pyfileconf_datacode.dchooks.update_pfc_context_to_pipeline_section_path"><code class="xref py py-func docutils literal notranslate"><span class="pre">update_pfc_context_to_pipeline_section_path()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><span class="target" id="pyfileconf_datacode.dchooks.update_pfc_context_to_original.params.operation"></span><strong>operation</strong><a class="paramlink headerlink reference internal" href="#pyfileconf_datacode.dchooks.update_pfc_context_to_original.params.operation">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataOperation</span></code>) – The operation which was just executed</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyfileconf_datacode.dchooks.update_pfc_context_to_pipeline_section_path">
+<code class="sig-prename descclassname">pyfileconf_datacode.dchooks.</code><code class="sig-name descname">update_pfc_context_to_pipeline_section_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">operation</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/dchooks.html#update_pfc_context_to_pipeline_section_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.dchooks.update_pfc_context_to_pipeline_section_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the section path of the operation’s pipeline and update
+the pyfileconf currently running context to this section path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><span class="target" id="pyfileconf_datacode.dchooks.update_pfc_context_to_pipeline_section_path.params.operation"></span><strong>operation</strong><a class="paramlink headerlink reference internal" href="#pyfileconf_datacode.dchooks.update_pfc_context_to_pipeline_section_path.params.operation">¶</a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataOperation</span></code>) – The operation which is about to be executed</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyfileconf_datacode.dcopts">
+<span id="pyfileconf-datacode-dcopts-module"></span><h2>pyfileconf_datacode.dcopts module<a class="headerlink" href="#module-pyfileconf_datacode.dcopts" title="Permalink to this headline">¶</a></h2>
+<p>Functions to set options in datacode to work better with pyfileconf</p>
+<dl class="py function">
+<dt id="pyfileconf_datacode.dcopts.set_datacode_options">
+<code class="sig-prename descclassname">pyfileconf_datacode.dcopts.</code><code class="sig-name descname">set_datacode_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/dcopts.html#set_datacode_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.dcopts.set_datacode_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pyfileconf_datacode.model">
+<span id="pyfileconf-datacode-model-module"></span><h2>pyfileconf_datacode.model module<a class="headerlink" href="#module-pyfileconf_datacode.model" title="Permalink to this headline">¶</a></h2>
+<p>Methods to attach to pyfileconf-datacode objects</p>
+<dl class="py function">
+<dt id="pyfileconf_datacode.model.pyfileconf_update">
+<code class="sig-prename descclassname">pyfileconf_datacode.model.</code><code class="sig-name descname">pyfileconf_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/model.html#pyfileconf_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.model.pyfileconf_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles pyfileconf config updates for DataSource and DataPipeline</p>
+<p>Transfers forward links to the newly initialized
+object as those are set by other objects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="pyfileconf_datacode.model.pyfileconf_update.params.obj"></span><strong>obj</strong><a class="paramlink headerlink reference internal" href="#pyfileconf_datacode.model.pyfileconf_update.params.obj">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DataSource</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataPipeline</span></code>]) – </p></li>
+<li><p><span class="target" id="pyfileconf_datacode.model.pyfileconf_update.params.kwargs"></span><strong>kwargs</strong><a class="paramlink headerlink reference internal" href="#pyfileconf_datacode.model.pyfileconf_update.params.kwargs">¶</a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyfileconf_datacode.plugin">
+<span id="pyfileconf-datacode-plugin-module"></span><h2>pyfileconf_datacode.plugin module<a class="headerlink" href="#module-pyfileconf_datacode.plugin" title="Permalink to this headline">¶</a></h2>
+<p>pyfileconf plugin to improve working with datacode</p>
+<dl class="py function">
+<dt id="pyfileconf_datacode.plugin.pyfileconf_iter_modify_cases">
+<code class="sig-prename descclassname">pyfileconf_datacode.plugin.</code><code class="sig-name descname">pyfileconf_iter_modify_cases</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cases</span></em>, <em class="sig-param"><span class="n">runner</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/plugin.html#pyfileconf_iter_modify_cases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.plugin.pyfileconf_iter_modify_cases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reorder cases so that pipelines are re-run as little as possible</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><span class="target" id="pyfileconf_datacode.plugin.pyfileconf_iter_modify_cases.params.cases"></span><strong>cases</strong><a class="paramlink headerlink reference internal" href="#pyfileconf_datacode.plugin.pyfileconf_iter_modify_cases.params.cases">¶</a> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>], …]]) – list of tuples of kwarg dictionaries which would normally be provided to .update</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyfileconf_datacode.plugin.pyfileconf_pre_update">
+<code class="sig-prename descclassname">pyfileconf_datacode.plugin.</code><code class="sig-name descname">pyfileconf_pre_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pm</span></em>, <em class="sig-param"><span class="n">d</span></em>, <em class="sig-param"><span class="n">section_path_str</span></em>, <em class="sig-param"><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/plugin.html#pyfileconf_pre_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.plugin.pyfileconf_pre_update" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyfileconf_datacode.plugin.pyfileconf_pre_update_batch">
+<code class="sig-prename descclassname">pyfileconf_datacode.plugin.</code><code class="sig-name descname">pyfileconf_pre_update_batch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pm</span></em>, <em class="sig-param"><span class="n">updates</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/plugin.html#pyfileconf_pre_update_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.plugin.pyfileconf_pre_update_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>After updating config, check for dependent configs
+which are datacode objects. Find the earliest out of
+those in the pipelines and call touch to mark them
+as just modified and call forward reset so everything
+starting from these will be re-run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="pyfileconf_datacode.plugin.pyfileconf_pre_update_batch.params.case"></span><strong>case</strong><a class="paramlink headerlink reference internal" href="#pyfileconf_datacode.plugin.pyfileconf_pre_update_batch.params.case">¶</a> – tuple of kwarg dictionaries which would normally be provided to .update</p></li>
+<li><p><span class="target" id="pyfileconf_datacode.plugin.pyfileconf_pre_update_batch.params.runner"></span><strong>runner</strong><a class="paramlink headerlink reference internal" href="#pyfileconf_datacode.plugin.pyfileconf_pre_update_batch.params.runner">¶</a> – <code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeRunner</span></code> which has been constructed to call iteration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyfileconf_datacode.reset">
+<span id="pyfileconf-datacode-reset-module"></span><h2>pyfileconf_datacode.reset module<a class="headerlink" href="#module-pyfileconf_datacode.reset" title="Permalink to this headline">¶</a></h2>
+<p>Logic related to resetting datacode objects</p>
+<dl class="py function">
+<dt id="pyfileconf_datacode.reset.reset_roots">
+<code class="sig-prename descclassname">pyfileconf_datacode.reset.</code><code class="sig-name descname">reset_roots</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">section_path_strs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyfileconf_datacode/reset.html#reset_roots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfileconf_datacode.reset.reset_roots" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="modules.html" class="btn btn-neutral float-left" title="pyfileconf_datacode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Nick DeRobertis
+
+    </p>
+  </div>
+    
+    
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-172919355-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>
