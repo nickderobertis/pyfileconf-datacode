@@ -36,6 +36,7 @@ jobs:
     - name: Install dependencies
       run: |
         pipenv sync
+        pipenv run pip install -e .
         sudo apt-get install graphviz -y
     - name: Lint with flake8
       run: |
@@ -80,6 +81,7 @@ jobs:
     - name: Install dependencies
       run: |
         pipenv sync
+        pipenv run pip install -e .
         sudo apt-get install pandoc graphviz -y
     - name: Build Documentation
       run: |
