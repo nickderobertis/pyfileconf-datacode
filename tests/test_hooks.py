@@ -1,4 +1,5 @@
 import datacode as dc
+import pytest
 from pyfileconf import Selector, IterativeRunner, context
 from pyfileconf.sectionpath.sectionpath import SectionPath
 
@@ -6,7 +7,7 @@ from tests.base import PFCDatacodeTest
 from tests.input_files.example_config import ConfigExample
 
 EXPECT_OPERATION_CONTEXT_SECTION_PATH = 'dcpm.transdata.temp.thing'
-COUNTER = 0
+OPERATION_COUNTER = 0
 
 
 def assert_context_is_updated(source: dc.DataSource) -> dc.DataSource:
@@ -16,8 +17,8 @@ def assert_context_is_updated(source: dc.DataSource) -> dc.DataSource:
 
 
 def increment_counter(source: dc.DataSource) -> dc.DataSource:
-    global COUNTER
-    COUNTER += 1
+    global OPERATION_COUNTER
+    OPERATION_COUNTER += 1
     return source
 
 
@@ -25,8 +26,8 @@ class TestHooks(PFCDatacodeTest):
 
     def teardown_method(self, method):
         super().teardown_method(method)
-        global COUNTER
-        COUNTER = 0
+        global OPERATION_COUNTER
+        OPERATION_COUNTER = 0
 
     def test_hook_updates_context_during_operation(self):
         pipeline_manager = self.create_pm()
@@ -39,7 +40,7 @@ class TestHooks(PFCDatacodeTest):
         self.create_analysis(pipeline_manager, 'analysis.temp.thing', data_source=s.dcpm.transdata.temp.thing)
         s = Selector()
         s.dcpm.analysis.temp.thing()
-        assert COUNTER == 1
+        assert OPERATION_COUNTER == 1
         assert context.currently_running_section_path_str is None
 
     def test_config_update_resets_dependent_pipeline(self):
@@ -51,11 +52,11 @@ class TestHooks(PFCDatacodeTest):
         self.create_transform(
             pipeline_manager, 'transdata.temp.thing', opts=opts, data_source=s.dcpm.sources.some.three
         )
-        Selector().dcpm.transdata.temp.thing()
-        assert COUNTER == 1
-        Selector().dcpm.transdata.temp.thing()
-        assert COUNTER == 1
+        s.dcpm.transdata.temp.thing()
+        assert OPERATION_COUNTER == 1
+        s.dcpm.transdata.temp.thing()
+        assert OPERATION_COUNTER == 1
         pipeline_manager.update(section_path_str="confs2.ConfigExample", a=300000)
-        Selector().dcpm.transdata.temp.thing()
-        assert COUNTER == 2
+        s.dcpm.transdata.temp.thing()
+        assert OPERATION_COUNTER == 2
 

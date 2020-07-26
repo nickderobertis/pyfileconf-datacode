@@ -1,3 +1,6 @@
+"""
+Hooks into datacode to update pyfileconf context with datacode operations
+"""
 from typing import Optional
 
 import datacode.hooks as dc_hooks

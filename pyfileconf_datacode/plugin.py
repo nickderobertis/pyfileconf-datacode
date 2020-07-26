@@ -1,3 +1,6 @@
+"""
+pyfileconf plugin to improve working with datacode
+"""
 import itertools
 from functools import partial
 from typing import (
@@ -8,13 +11,23 @@ from typing import (
     Set,
     TYPE_CHECKING,
     Sequence,
+    Iterable,
+    Optional,
 )
+
+from datacode.models.pipeline.base import DataPipeline
+from pyfileconf.sectionpath.sectionpath import SectionPath
+
+from pyfileconf_datacode.config import config_dependencies_for_section_path_strs
+from pyfileconf_datacode.reset import reset_roots
 
 if TYPE_CHECKING:
     from pyfileconf.iterate import IterativeRunner
+    from pyfileconf import PipelineManager
+    from pyfileconf.selector.models.itemview import ItemView
 
 import pyfileconf
-from datacode import DataExplorer
+from datacode import DataExplorer, DataSource
 
 
 @pyfileconf.hookimpl
@@ -28,20 +41,14 @@ def pyfileconf_iter_modify_cases(
     :return: None
     """
     from pyfileconf.selector.models.itemview import ItemView
-    from pyfileconf import context
 
     # Gather unique config section path strs
     section_path_strs: Set[str] = set()
     for conf in runner.config_updates:
         section_path_strs.add(conf["section_path_str"])
 
-    # Get section path strs of items which dependent on the changing config
-    config_deps: Dict[str, List[ItemView]] = {}
-    for sp_str in section_path_strs:
-        config_deps[sp_str] = [
-            ItemView.from_section_path_str(sp.path_str)
-            for sp in context.config_dependencies[sp_str]
-        ]
+    # Get views of items which dependent on the changing config
+    config_deps = config_dependencies_for_section_path_strs(section_path_strs)
 
     # Get difficulty of executing all run items after a change in each config individually
     config_ivs = [
@@ -78,3 +85,34 @@ def _sort_key_for_case_tup(
         ] = f"{conf_item_idx:030}"  # pad with zeroes to ensure differing length doesn't change order
     key = "_".join(key_parts)
     return key
+
+
+@pyfileconf.hookimpl
+def pyfileconf_pre_update_batch(
+    pm: "PipelineManager", updates: Iterable[dict],
+) -> Iterable[dict]:
+    """
+    After updating config, check for dependent configs
+    which are datacode objects. Find the earliest out of
+    those in the pipelines and call touch to mark them
+    as just modified and call forward reset so everything
+    starting from these will be re-run.
+
+    :param case: tuple of kwarg dictionaries which would normally be provided to .update
+    :param runner: :class:`IterativeRunner` which has been constructed to call iteration
+    :return: None
+    """
+    section_path_strs = [conf_dict["section_path_str"] for conf_dict in updates]
+    reset_roots(section_path_strs)
+    return []
+
+
+@pyfileconf.hookimpl
+def pyfileconf_pre_update(
+    pm: "PipelineManager",
+    d: dict,
+    section_path_str: str,
+    kwargs: Dict[str, Any],
+) -> Optional[Dict[str, Any]]:
+    full_sp = SectionPath.join(pm.name, section_path_str)
+    reset_roots([full_sp.path_str])

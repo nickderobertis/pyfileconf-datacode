@@ -1,11 +1,12 @@
 import os
 from collections import defaultdict
-from typing import Optional, Sequence, Union
+from typing import Optional, Sequence, Union, Dict
 from unittest import TestCase
 
 import pandas as pd
 import datacode as dc
 from datacode import MergeOptions
+from datacode.graph.base import GraphFunction
 from datacode.models.pipeline.base import DataPipeline
 from pyfileconf import Selector, context
 from pyfileconf.main import create_project, PipelineManager
@@ -94,6 +95,15 @@ def sum_all_numeric(source: dc.DataSource) -> int:
             running_sum += source.df[var.name].sum()
     return running_sum
 
+
+def has_df(source):
+    if hasattr(source, '_df') and source._df is not None:
+        return True
+    if source.df is not None:
+        return True
+    return False
+
+
 EXPECT_GENERATED_DF = pd.DataFrame(
     [
         (200, 'd'),
@@ -155,6 +165,7 @@ class PFCDatacodeTest(TestCase):
     )
 
     def setup_method(self, method):
+        delete_project(self.pm_folder, self.logs_path, SPECIFIC_CLASS_CONFIG_DICTS)
         create_project(self.pm_folder, self.logs_path, SPECIFIC_CLASS_CONFIG_DICTS)
 
     def teardown_method(self, method):
@@ -365,7 +376,15 @@ class PFCDatacodeTest(TestCase):
             df = self.test_df2
         df.to_csv(self.csv_path2, index=False, **to_csv_kwargs)
 
-    def create_graph(self, pm: PipelineManager):
+    def create_graph(self, pm: PipelineManager, include_attrs: Optional[Sequence[str]] = None,
+                        func_dict: Optional[Dict[str, GraphFunction]] = None):
+        if include_attrs is None:
+            include_attrs = ['difficulty', '_section_path_str', '_operation_index', 'last_modified']
+        if func_dict is None:
+            func_dict = {'Has df': has_df, 'cols': lambda source: [col.load_key for col in source.columns] if hasattr(source, 'columns') else None,
+                         'F Links': lambda source: len(source.forward_links),
+                         'B Links': lambda source: len(source.back_links)}
+
         collection = {attr: pm.get(attr) for attr in DATA_ATTRS}
         explorer = dc.DataExplorer.from_dict(collection)
-        explorer.graph(include_attrs=['difficulty', '_section_path_str']).render(GRAPH_PATH)
+        explorer.graph(include_attrs=include_attrs, func_dict=func_dict).render(GRAPH_PATH)
