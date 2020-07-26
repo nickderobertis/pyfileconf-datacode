@@ -63,6 +63,7 @@ PACKAGE_INSTALL_REQUIRES = [
     # 'package',
     # 'otherpackage>=1,<2'
     'pyfileconf',
+    'datacode',
 ]
 
 # Add any third party packages you use in requirements for optional features of your package here

@@ -16,6 +16,8 @@ from tests.input_files.example_config import ConfigExample
 from tests.input_files.example_func import a_function
 from tests.utils import delete_project
 
+import pyfileconf_datacode  # causes plugin to get loaded
+
 BASE_GENERATED_DIR = os.path.join('tests', 'generated_files')
 INPUT_FILES_DIR = os.path.join('tests', 'input_files')
 
