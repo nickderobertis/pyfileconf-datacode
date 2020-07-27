@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconf_datacode.plugin &mdash; pyfileconf-datacode 0.1.1 documentation</title>
+  <title>pyfileconf_datacode.plugin &mdash; pyfileconf-datacode 0.1.2 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.2
               </div>
             
           
@@ -209,9 +209,10 @@
     <span class="kn">from</span> <span class="nn">pyfileconf.selector.models.itemview</span> <span class="kn">import</span> <span class="n">ItemView</span>
 
     <span class="c1"># Gather unique config section path strs</span>
-    <span class="n">section_path_strs</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">section_path_strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">conf</span> <span class="ow">in</span> <span class="n">runner</span><span class="o">.</span><span class="n">config_updates</span><span class="p">:</span>
-        <span class="n">section_path_strs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">conf</span><span class="p">[</span><span class="s2">&quot;section_path_str&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;section_path_str&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">section_path_strs</span><span class="p">:</span>
+            <span class="n">section_path_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conf</span><span class="p">[</span><span class="s2">&quot;section_path_str&quot;</span><span class="p">])</span>
 
     <span class="c1"># Get views of items which dependent on the changing config</span>
     <span class="n">config_deps</span> <span class="o">=</span> <span class="n">config_dependencies_for_section_path_strs</span><span class="p">(</span><span class="n">section_path_strs</span><span class="p">)</span>
@@ -222,13 +223,23 @@
     <span class="p">]</span>
     <span class="n">dependent_ivs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">config_deps</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
     <span class="n">run_ivs</span> <span class="o">=</span> <span class="p">[</span><span class="n">ItemView</span><span class="o">.</span><span class="n">from_section_path_str</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">path_str</span><span class="p">)</span> <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">runner</span><span class="o">.</span><span class="n">run_items</span><span class="p">]</span>
+    <span class="n">dc_run_ivs</span> <span class="o">=</span> <span class="p">[</span><span class="n">iv</span> <span class="k">for</span> <span class="n">iv</span> <span class="ow">in</span> <span class="n">run_ivs</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span> <span class="p">(</span><span class="n">DataSource</span><span class="p">,</span> <span class="n">DataPipeline</span><span class="p">))]</span>
 
     <span class="n">de</span> <span class="o">=</span> <span class="n">DataExplorer</span><span class="p">(</span><span class="n">config_ivs</span> <span class="o">+</span> <span class="n">dependent_ivs</span> <span class="o">+</span> <span class="n">run_ivs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-    <span class="n">difficulties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">sp_str</span><span class="p">:</span> <span class="n">de</span><span class="o">.</span><span class="n">difficulty_between</span><span class="p">(</span><span class="n">dep_ivs</span><span class="p">,</span> <span class="n">run_ivs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="k">for</span> <span class="n">sp_str</span><span class="p">,</span> <span class="n">dep_ivs</span> <span class="ow">in</span> <span class="n">config_deps</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-    <span class="p">}</span>
-    <span class="n">ordered_sp_strs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">section_path_strs</span><span class="p">)</span>
+    <span class="n">difficulties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">sp_str</span><span class="p">,</span> <span class="n">dep_ivs</span> <span class="ow">in</span> <span class="n">config_deps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">dc_dep_ivs</span> <span class="o">=</span> <span class="p">[</span><span class="n">iv</span> <span class="k">for</span> <span class="n">iv</span> <span class="ow">in</span> <span class="n">dep_ivs</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iv</span><span class="p">,</span> <span class="p">(</span><span class="n">DataSource</span><span class="p">,</span> <span class="n">DataPipeline</span><span class="p">))]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dc_dep_ivs</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">dc_run_ivs</span><span class="p">:</span>
+            <span class="c1"># The relationship between this config and the running item has nothing to do</span>
+            <span class="c1"># with datacode. This means as far as this plugin is concerned, these cases</span>
+            <span class="c1"># should be put last (changing most often) since they do not require any</span>
+            <span class="c1"># re-running of pipelines. Therefore they have zero difficulty.</span>
+            <span class="c1"># But want to retain the order in which they are passed for consistency,</span>
+            <span class="c1"># so instead assign a negative difficulty by its position</span>
+            <span class="n">difficulties</span><span class="p">[</span><span class="n">sp_str</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">section_path_strs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sp_str</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">difficulties</span><span class="p">[</span><span class="n">sp_str</span><span class="p">]</span> <span class="o">=</span> <span class="n">de</span><span class="o">.</span><span class="n">difficulty_between</span><span class="p">(</span><span class="n">dc_dep_ivs</span><span class="p">,</span> <span class="n">dc_run_ivs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+    <span class="n">ordered_sp_strs</span> <span class="o">=</span> <span class="n">section_path_strs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">ordered_sp_strs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sp_str</span><span class="p">:</span> <span class="o">-</span><span class="n">difficulties</span><span class="p">[</span><span class="n">sp_str</span><span class="p">])</span>
 
     <span class="n">get_sort_key</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
