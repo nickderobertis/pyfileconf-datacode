@@ -38,6 +38,7 @@ class TestIterativeRunnerPlugin(PFCDatacodeTest):
         dc_hooks.on_end_execute_operation = self._orig_on_end_execute_operation
         dc_hooks.on_end_load_source = self._orig_on_end_load_source
         self.reset_counters()
+        super().teardown_method(method)
 
     def reset_counters(self):
         global OPERATION_COUNTER
@@ -68,7 +69,7 @@ class TestIterativeRunnerPlugin(PFCDatacodeTest):
             dict(section_path_str="dcpm.confs2.ConfigExample", a=300000),
             dict(section_path_str="dcpm.confs2.ConfigExample", a=400000),
         ]
-        runner = IterativeRunner([iv, iv2], config_updates=config_updates)
+        runner = IterativeRunner([iv, iv2, unrelated_iv], config_updates=config_updates)
         cases = runner.cases
         # Conf2 has higher difficulty so it should change less
         assert cases == [
@@ -99,3 +100,58 @@ class TestIterativeRunnerPlugin(PFCDatacodeTest):
         result = runner.run()
         assert OPERATION_COUNTER == 19
         assert LOAD_SOURCE_COUNTER == 2
+
+    def test_update_origial_cases_when_run_target_is_not_datacodeobj(self):
+        pipeline_manager = self.create_pm()
+        pipeline_manager.load()
+        self.create_entries(pipeline_manager)
+        self.reset_counters()
+        s = Selector()
+        iv = s.dcpm.analysis.some.one
+        iv2 = s.dcpm.analysis.some.two
+        unrelated_iv = s.dcpm.stuff.thing.a_function
+
+        # Run each once so dynamic config dependencies are tracked
+        assert OPERATION_COUNTER == 0
+        assert LOAD_SOURCE_COUNTER == 0
+        pipeline_manager.run(unrelated_iv)
+        assert OPERATION_COUNTER == 0
+        assert LOAD_SOURCE_COUNTER == 0
+
+        config_updates = [
+            dict(section_path_str="dcpm.confs.ConfigExample", a=10000),
+            dict(section_path_str="dcpm.confs.ConfigExample", a=20000),
+            dict(section_path_str="dcpm.confs2.ConfigExample", a=300000),
+            dict(section_path_str="dcpm.confs2.ConfigExample", a=400000),
+        ]
+        runner = IterativeRunner([unrelated_iv], config_updates=config_updates)
+        cases = runner.cases
+        # Original case order
+        assert cases == [
+            (
+                # 5 operations, 1 source load
+                {"section_path_str": "dcpm.confs.ConfigExample", "a": 10000},
+                {"section_path_str": "dcpm.confs2.ConfigExample", "a": 300000},
+            ),
+            (
+                # 2 operations
+                {"section_path_str": "dcpm.confs.ConfigExample", "a": 10000},
+                {"section_path_str": "dcpm.confs2.ConfigExample", "a": 400000},
+            ),
+            (
+                # 5 operations, 1 source load
+                {"section_path_str": "dcpm.confs.ConfigExample", "a": 20000},
+                {"section_path_str": "dcpm.confs2.ConfigExample", "a": 300000},
+            ),
+            (
+                # 2 operations
+                {"section_path_str": "dcpm.confs.ConfigExample", "a": 20000},
+                {"section_path_str": "dcpm.confs2.ConfigExample", "a": 400000},
+            ),
+        ]
+
+        assert OPERATION_COUNTER == 0
+        assert LOAD_SOURCE_COUNTER == 0
+        result = runner.run()
+        assert OPERATION_COUNTER == 0
+        assert LOAD_SOURCE_COUNTER == 0

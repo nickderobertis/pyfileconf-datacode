@@ -43,9 +43,10 @@ def pyfileconf_iter_modify_cases(
     from pyfileconf.selector.models.itemview import ItemView
 
     # Gather unique config section path strs
-    section_path_strs: Set[str] = set()
+    section_path_strs: List[str] = []
     for conf in runner.config_updates:
-        section_path_strs.add(conf["section_path_str"])
+        if conf["section_path_str"] not in section_path_strs:
+            section_path_strs.append(conf["section_path_str"])
 
     # Get views of items which dependent on the changing config
     config_deps = config_dependencies_for_section_path_strs(section_path_strs)
@@ -56,13 +57,23 @@ def pyfileconf_iter_modify_cases(
     ]
     dependent_ivs = list(set(itertools.chain(*config_deps.values())))
     run_ivs = [ItemView.from_section_path_str(sp.path_str) for sp in runner.run_items]
+    dc_run_ivs = [iv for iv in run_ivs if isinstance(iv, (DataSource, DataPipeline))]
 
     de = DataExplorer(config_ivs + dependent_ivs + run_ivs)  # type: ignore
-    difficulties: Dict[str, float] = {
-        sp_str: de.difficulty_between(dep_ivs, run_ivs)  # type: ignore
-        for sp_str, dep_ivs in config_deps.items()
-    }
-    ordered_sp_strs = list(section_path_strs)
+    difficulties: Dict[str, float] = {}
+    for sp_str, dep_ivs in config_deps.items():
+        dc_dep_ivs = [iv for iv in dep_ivs if isinstance(iv, (DataSource, DataPipeline))]
+        if not dc_dep_ivs or not dc_run_ivs:
+            # The relationship between this config and the running item has nothing to do
+            # with datacode. This means as far as this plugin is concerned, these cases
+            # should be put last (changing most often) since they do not require any
+            # re-running of pipelines. Therefore they have zero difficulty.
+            # But want to retain the order in which they are passed for consistency,
+            # so instead assign a negative difficulty by its position
+            difficulties[sp_str] = -section_path_strs.index(sp_str)
+        else:
+            difficulties[sp_str] = de.difficulty_between(dc_dep_ivs, dc_run_ivs)  # type: ignore
+    ordered_sp_strs = section_path_strs.copy()
     ordered_sp_strs.sort(key=lambda sp_str: -difficulties[sp_str])
 
     get_sort_key = partial(
