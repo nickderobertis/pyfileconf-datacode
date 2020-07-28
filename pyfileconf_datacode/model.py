@@ -20,3 +20,11 @@ def pyfileconf_update(obj: Union[dc.DataSource, dc.DataPipeline], **kwargs):
     obj.__init__(**kwargs)
     for link in forward_links:
         obj._add_forward_link(link)
+
+    if isinstance(obj, dc.DataSource):
+        # Delete data_loader as it will be set again
+        # depending on the potentially new location and pipeline
+        try:
+            del obj.data_loader
+        except AttributeError:
+            pass
