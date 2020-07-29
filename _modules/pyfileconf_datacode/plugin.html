@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconf_datacode.plugin &mdash; pyfileconf-datacode 0.1.3 documentation</title>
+  <title>pyfileconf_datacode.plugin &mdash; pyfileconf-datacode 0.1.4 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.1.4
               </div>
             
           
@@ -182,6 +182,8 @@
 <span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">datacode.models.pipeline.base</span> <span class="kn">import</span> <span class="n">DataPipeline</span>
+<span class="kn">from</span> <span class="nn">pyfileconf.basemodels.config</span> <span class="kn">import</span> <span class="n">ConfigBase</span>
+<span class="kn">from</span> <span class="nn">pyfileconf.config.models.manager</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
 <span class="kn">from</span> <span class="nn">pyfileconf.sectionpath.sectionpath</span> <span class="kn">import</span> <span class="n">SectionPath</span>
 
 <span class="kn">from</span> <span class="nn">pyfileconf_datacode.config</span> <span class="kn">import</span> <span class="n">config_dependencies_for_section_path_strs</span>
@@ -284,14 +286,14 @@
     <span class="k">return</span> <span class="p">[]</span></div>
 
 
-<div class="viewcode-block" id="pyfileconf_pre_update"><a class="viewcode-back" href="../../api/pyfileconf_datacode.html#pyfileconf_datacode.plugin.pyfileconf_pre_update">[docs]</a><span class="nd">@pyfileconf</span><span class="o">.</span><span class="n">hookimpl</span>
-<span class="k">def</span> <span class="nf">pyfileconf_pre_update</span><span class="p">(</span>
-    <span class="n">pm</span><span class="p">:</span> <span class="s2">&quot;PipelineManager&quot;</span><span class="p">,</span>
-    <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+<div class="viewcode-block" id="pyfileconf_post_config_changed"><a class="viewcode-back" href="../../api/pyfileconf_datacode.html#pyfileconf_datacode.plugin.pyfileconf_post_config_changed">[docs]</a><span class="nd">@pyfileconf</span><span class="o">.</span><span class="n">hookimpl</span>
+<span class="k">def</span> <span class="nf">pyfileconf_post_config_changed</span><span class="p">(</span>
+    <span class="n">manager</span><span class="p">:</span> <span class="s1">&#39;ConfigManager&#39;</span><span class="p">,</span>
+    <span class="n">new_config</span><span class="p">:</span> <span class="s1">&#39;ConfigBase&#39;</span><span class="p">,</span>
+    <span class="n">updates</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
     <span class="n">section_path_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
-    <span class="n">full_sp</span> <span class="o">=</span> <span class="n">SectionPath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">section_path_str</span><span class="p">)</span>
+<span class="p">):</span>
+    <span class="n">full_sp</span> <span class="o">=</span> <span class="n">SectionPath</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">manager</span><span class="o">.</span><span class="n">pipeline_manager_name</span><span class="p">,</span> <span class="n">section_path_str</span><span class="p">)</span>
     <span class="n">reset_roots</span><span class="p">([</span><span class="n">full_sp</span><span class="o">.</span><span class="n">path_str</span><span class="p">])</span>
     <span class="k">return</span> <span class="kc">None</span></div>
 </pre></div>
