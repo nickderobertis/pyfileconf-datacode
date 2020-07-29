@@ -16,6 +16,8 @@ from typing import (
 )
 
 from datacode.models.pipeline.base import DataPipeline
+from pyfileconf.basemodels.config import ConfigBase
+from pyfileconf.config.models.manager import ConfigManager
 from pyfileconf.sectionpath.sectionpath import SectionPath
 
 from pyfileconf_datacode.config import config_dependencies_for_section_path_strs
@@ -119,12 +121,12 @@ def pyfileconf_pre_update_batch(
 
 
 @pyfileconf.hookimpl
-def pyfileconf_pre_update(
-    pm: "PipelineManager",
-    d: dict,
+def pyfileconf_post_config_changed(
+    manager: 'ConfigManager',
+    new_config: 'ConfigBase',
+    updates: Dict[str, Any],
     section_path_str: str,
-    kwargs: Dict[str, Any],
-) -> Optional[Dict[str, Any]]:
-    full_sp = SectionPath.join(pm.name, section_path_str)
+):
+    full_sp = SectionPath.join(manager.pipeline_manager_name, section_path_str)
     reset_roots([full_sp.path_str])
     return None
