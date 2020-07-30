@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconf_datacode.model &mdash; pyfileconf-datacode 0.1.4 documentation</title>
+  <title>pyfileconf_datacode.model &mdash; pyfileconf-datacode 0.1.5 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.5
               </div>
             
           
@@ -192,6 +192,14 @@
         <span class="c1"># depending on the potentially new location and pipeline</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">obj</span><span class="o">.</span><span class="n">data_loader</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">DataPipeline</span><span class="p">):</span>
+        <span class="c1"># Delete operations as they will be set again</span>
+        <span class="c1"># depending on the potentially new options</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">obj</span><span class="o">.</span><span class="n">_operations</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">pass</span></div>
 </pre></div>
