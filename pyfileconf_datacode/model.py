@@ -28,3 +28,11 @@ def pyfileconf_update(obj: Union[dc.DataSource, dc.DataPipeline], **kwargs):
             del obj.data_loader
         except AttributeError:
             pass
+
+    if isinstance(obj, dc.DataPipeline):
+        # Delete operations as they will be set again
+        # depending on the potentially new options
+        try:
+            del obj._operations
+        except AttributeError:
+            pass
