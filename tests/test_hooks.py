@@ -47,7 +47,7 @@ class TestHooks(PFCDatacodeTest):
         pipeline_manager = self.create_pm()
         pipeline_manager.load()
         self.create_entries(pipeline_manager)
-        opts = dc.TransformOptions(increment_counter, transform_key='increment_count')
+        opts = dc.TransformOptions(increment_counter, transform_key='increment_count', out_path=self.transform_out_path)
         s = Selector()
         self.create_transform(
             pipeline_manager, 'transdata.temp.thing', opts=opts, data_source=s.dcpm.sources.some.three
@@ -59,4 +59,23 @@ class TestHooks(PFCDatacodeTest):
         pipeline_manager.update(section_path_str="confs2.ConfigExample", a=300000)
         s.dcpm.transdata.temp.thing()
         assert OPERATION_COUNTER == 2
+
+    def test_cache_works_properly(self):
+        pipeline_manager = self.create_pm()
+        pipeline_manager.load()
+        self.create_entries(pipeline_manager)
+        opts = dc.TransformOptions(increment_counter, transform_key='increment_count', out_path=self.transform_out_path)
+        s = Selector()
+        self.create_transform(
+            pipeline_manager, 'transdata.temp.thing', opts=opts, data_source=s.dcpm.sources.some.three
+        )
+        self.create_transform(
+            pipeline_manager, 'transdata.temp.thing2', opts=opts, data_source=s.dcpm.sources.some.three
+        )
+        s.dcpm.transdata.temp.thing()
+        assert OPERATION_COUNTER == 1
+        s.dcpm.transdata.temp.thing()
+        assert OPERATION_COUNTER == 1
+        s.dcpm.transdata.temp.thing2()
+        assert OPERATION_COUNTER == 1
 
