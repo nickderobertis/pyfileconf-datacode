@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyfileconf_datacode.dcopts &mdash; pyfileconf-datacode 0.1.5 documentation</title>
+  <title>pyfileconf_datacode.dcopts &mdash; pyfileconf-datacode 0.1.6 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.5
+                0.1.6
               </div>
             
           
@@ -167,14 +167,27 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Functions to set options in datacode to work better with pyfileconf</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
 <span class="kn">import</span> <span class="nn">datacode</span> <span class="k">as</span> <span class="nn">dc</span>
 
 <span class="kn">from</span> <span class="nn">pyfileconf_datacode.model</span> <span class="kn">import</span> <span class="n">pyfileconf_update</span>
 
 
+
 <div class="viewcode-block" id="set_datacode_options"><a class="viewcode-back" href="../../api/pyfileconf_datacode.html#pyfileconf_datacode.dcopts.set_datacode_options">[docs]</a><span class="k">def</span> <span class="nf">set_datacode_options</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">pyfileconf.selector.models.selector</span> <span class="kn">import</span> <span class="n">Selector</span>
+
+    <span class="n">dc_hash_options</span><span class="p">:</span> <span class="n">dc</span><span class="o">.</span><span class="n">HashDictOptions</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">DEFAULT_HASH_DICT_OPTIONS</span><span class="p">)</span>
+    <span class="n">dc_hash_options</span><span class="p">[</span><span class="s1">&#39;exclude_types&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Selector</span><span class="p">)</span>
+    <span class="n">dc_hash_options</span><span class="p">[</span><span class="s1">&#39;exclude_regex_paths&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+        <span class="s1">&#39;._section_path_str$&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;.section_path_str$&#39;</span><span class="p">,</span>
+    <span class="p">])</span>
+
     <span class="n">dc</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">set_class_attr</span><span class="p">(</span><span class="s2">&quot;DataSource&quot;</span><span class="p">,</span> <span class="s2">&quot;_pyfileconf_update_&quot;</span><span class="p">,</span> <span class="n">pyfileconf_update</span><span class="p">)</span>
-    <span class="n">dc</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">set_class_attr</span><span class="p">(</span><span class="s2">&quot;DataPipeline&quot;</span><span class="p">,</span> <span class="s2">&quot;_pyfileconf_update_&quot;</span><span class="p">,</span> <span class="n">pyfileconf_update</span><span class="p">)</span></div>
+    <span class="n">dc</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">set_class_attr</span><span class="p">(</span><span class="s2">&quot;DataPipeline&quot;</span><span class="p">,</span> <span class="s2">&quot;_pyfileconf_update_&quot;</span><span class="p">,</span> <span class="n">pyfileconf_update</span><span class="p">)</span>
+    <span class="n">dc</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">set_hash_options</span><span class="p">(</span><span class="n">dc_hash_options</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

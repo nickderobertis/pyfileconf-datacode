@@ -33,6 +33,14 @@ pyfileconf\_datacode.dcopts module
    :undoc-members:
    :show-inheritance:
 
+pyfileconf\_datacode.deepdiff\_patch module
+-------------------------------------------
+
+.. automodule:: pyfileconf_datacode.deepdiff_patch
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pyfileconf\_datacode.model module
 ---------------------------------
 
