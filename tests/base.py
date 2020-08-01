@@ -145,9 +145,13 @@ class PFCDatacodeTest(TestCase):
     logs_path = os.path.join(pm_folder, 'MyLogs')
     csv_path = os.path.join(BASE_GENERATED_DIR, 'data.csv')
     csv_path2 = os.path.join(BASE_GENERATED_DIR, 'data2.csv')
+    transform_out_path = os.path.join(BASE_GENERATED_DIR, 'transformed.csv')
+    transform_dcc_path = os.path.join(BASE_GENERATED_DIR, 'transformed.csv.dcc.json')
     non_pm_paths = (
         csv_path,
-        csv_path2
+        csv_path2,
+        transform_out_path,
+        transform_dcc_path
     )
     test_name = 'dcpm'
     test_df = pd.DataFrame(
@@ -173,7 +177,8 @@ class PFCDatacodeTest(TestCase):
     def teardown_method(self, method):
         delete_project(self.pm_folder, self.logs_path, SPECIFIC_CLASS_CONFIG_DICTS)
         for path in self.non_pm_paths:
-            os.remove(path)
+            if os.path.exists(path):
+                os.remove(path)
         self.reset_pm_class()
 
     def create_pm(self, **kwargs):
@@ -302,7 +307,7 @@ class PFCDatacodeTest(TestCase):
                          name: str = 'Transform'):
         s = Selector()
         if opts is None:
-            opts = dc.TransformOptions(source_transform_func, transform_key='add_one')
+            opts = dc.TransformOptions(source_transform_func, transform_key='add_one', out_path=self.transform_out_path)
         if data_source is None:
             data_source = s.dcpm.merges.some.thing
         pm.create(section_path_str)
